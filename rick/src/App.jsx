@@ -8,7 +8,7 @@ function App() {
   const [characters , setCharacters]=useState(allCharacters)
   return (
     <div>
-      <Navbar />
+      <Navbar numOfCharacters = {characters.length}/>
       <main className="main">
         <Characterlist characters={ characters} />
         <CharacterDetails />
