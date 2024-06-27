@@ -1,5 +1,6 @@
 import React from "react";
-import { character } from "../../data/data";
+import { character, episodes } from "../../data/data";
+import { FaCircleArrowDown } from "react-icons/fa6";
 function CharacterDetails() {
   return (
     <div className="" style={{ flex: 1 }}>
@@ -30,8 +31,27 @@ function CharacterDetails() {
           </div>
         </div>
       </div>
-          <div className="character-episodes">
-              <div className=""></div>
+      <div className="character-episodes">
+        <div className="title">
+          <h2>Lists of episodes</h2>
+          <button className="icon">
+            {" "}
+            <FaCircleArrowDown />{" "}
+          </button>
+        </div>
+        <ul>
+          {episodes.map((item, index) => {
+            return (
+              <li key={item.id}>
+                <div>
+                  {String(index + 1).padStart(2, "0")} {item.episode}:{" "}
+                  <strog>{item.name}</strog>
+                </div>
+                <div className="badge badge--secondary">{item.air_date}</div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
