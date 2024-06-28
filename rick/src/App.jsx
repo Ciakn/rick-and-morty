@@ -3,19 +3,26 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 import CharacterDetails from "./components/CharacterDetails";
 import Characterlist from "./components/Characterlist";
-import { character, allCharacters } from "../data/data";
+import Loader from "./components/Loader";
 function App() {
   const [characters, setCharacters] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    fetch("https://rickandmortyapi.com/api/character")
-      .then((res) => res.json())
-      .then((data) => setCharacters(data.results.slice(0,5)));
+    async function fetchData() {
+      setIsLoading(true);
+      const res = await fetch("https://rickandmortyapi.com/api/character");
+      const data = await res.json();
+      console.log(res);
+      setCharacters(data.results.slice(0, 5));
+      setIsLoading(false);
+    }
+    fetchData();
   }, []);
   return (
     <div>
       <Navbar numOfCharacters={characters.length} />
       <main className="main">
-        <Characterlist characters={characters} />
+        {isLoading ? <Loader /> : <Characterlist characters={characters} />}
         <CharacterDetails />
       </main>
     </div>
