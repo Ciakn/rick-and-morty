@@ -48,7 +48,8 @@
 }
 
 .main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   justify-content: space-between;
   width: 100%;
   gap: 2rem;
@@ -56,6 +57,7 @@
 
 .characters-list {
   width: 40%;
+
 }
 
 .box h2 {

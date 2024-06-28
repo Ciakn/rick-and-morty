@@ -11,7 +11,7 @@ function App() {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const res = await fetch("https://rickandmortyapi.com/api/charcter");
+        const res = await fetch("https://rickandmortyapi.com/api/character");
         if (!res.ok) throw new Error("Something went wrong");
         const data = await res.json();
 
