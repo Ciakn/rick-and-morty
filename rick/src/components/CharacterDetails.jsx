@@ -45,7 +45,7 @@ function CharacterDetails() {
               <li key={item.id}>
                 <div>
                   {String(index + 1).padStart(2, "0")} {item.episode}:{" "}
-                  <strog>{item.name}</strog>
+                  <h4>{item.name}</h4>
                 </div>
                 <div className="badge badge--secondary">{item.air_date}</div>
               </li>
