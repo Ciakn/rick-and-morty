@@ -1,17 +1,22 @@
 import React from "react";
 import { HiOutlineUser } from "react-icons/hi2";
-function Characterlist({ characters }) {
+import Loader from "./Loader";
+function Characterlist({ characters, isLoading }) {
   console.log(characters);
   return (
     <div className=".characters-list">
-      {characters.map((character, index) => {
-        console.log(character);
-        return (
-          <div>
-            <Character key={character.id} character={character} />
-          </div>
-        );
-      })}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        characters.map((character, index) => {
+          console.log(character);
+          return (
+            <div>
+              <Character key={character.id} character={character} />
+            </div>
+          );
+        })
+      )}
     </div>
   );
 }
@@ -33,9 +38,7 @@ const Character = ({ character }) => {
         <span> {character.status} </span>
         <span>-{character.species}</span>
       </div>
-      <button  className="icon red" >
-        {"👁 "}
-      </button>
+      <button className="icon red">{"👁 "}</button>
     </div>
   );
 };

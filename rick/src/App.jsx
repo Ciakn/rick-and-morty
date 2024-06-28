@@ -22,7 +22,7 @@ function App() {
     <div>
       <Navbar numOfCharacters={characters.length} />
       <main className="main">
-        {isLoading ? <Loader /> : <Characterlist characters={characters} />}
+        {<Characterlist characters={characters} isLoading={ isLoading} />}
         <CharacterDetails />
       </main>
     </div>
