@@ -1,7 +1,12 @@
 import React from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Loader from "./Loader";
-function Characterlist({ characters, isLoading, onSelectCharacter }) {
+function Characterlist({
+  characters,
+  isLoading,
+  onSelectCharacter,
+  selectedCharacterId,
+}) {
   if (isLoading) {
     return (
       <div>
@@ -17,6 +22,7 @@ function Characterlist({ characters, isLoading, onSelectCharacter }) {
             <Character
               onSelectCharacter={onSelectCharacter}
               character={character}
+              selectedCharacterId={selectedCharacterId}
             />
           </div>
         );
@@ -26,7 +32,7 @@ function Characterlist({ characters, isLoading, onSelectCharacter }) {
 }
 
 export default Characterlist;
-const Character = ({ character, onSelectCharacter }) => {
+const Character = ({ character, onSelectCharacter, selectedCharacterId }) => {
   return (
     <div
       key={character.id}
@@ -44,7 +50,9 @@ const Character = ({ character, onSelectCharacter }) => {
         <span> {character.status} </span>
         <span>-{character.species}</span>
       </div>
-      <button className="icon red">{<EyeIcon />}</button>
+      <button className="icon red">
+        {character.id == selectedCharacterId ? <EyeSlashIcon /> : <EyeIcon />}
+      </button>
     </div>
   );
 };

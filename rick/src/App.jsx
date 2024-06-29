@@ -13,7 +13,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const onSelectCharacter = (id) => {
-    setSelectedId(id);
+    setSelectedId((prev) => (prev == id ? null : id));
   };
   console.log(selectedId);
   useEffect(() => {
@@ -49,6 +49,7 @@ function App() {
             characters={characters}
             isLoading={isLoading}
             onSelectCharacter={onSelectCharacter}
+            selectedCharacterId={selectedId}
           />
         }
         <CharacterDetails selectedCharacterId={selectedId} />
