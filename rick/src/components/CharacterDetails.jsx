@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { episodes } from "../../data/data";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -7,6 +6,8 @@ import Loader from "./Loader";
 function CharacterDetails({ selectedCharacterId }) {
   const [character, setCharacters] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const [episodes, setEpisode] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -14,8 +15,14 @@ function CharacterDetails({ selectedCharacterId }) {
         const { data } = await axios.get(
           `https://rickandmortyapi.com/api/character/${selectedCharacterId}`
         );
-
         setCharacters(data);
+
+        const episodeId = data.episode.map((e) => e.split("/").at(-1));
+        const { data: episodeData } = await axios.get(
+          `https://rickandmortyapi.com/api/episode/${episodeId}`
+        );
+
+        setEpisode([episodeData].flat().slice(0, 7));
       } catch (error) {
         toast.error(error.response.data.error);
       } finally {
@@ -86,17 +93,21 @@ function CharacterDetails({ selectedCharacterId }) {
           </button>
         </div>
         <ul>
-          {episodes.map((item, index) => {
-            return (
-              <li key={item.id}>
-                <div>
-                  {String(index + 1).padStart(2, "0")} {item.episode}:{" "}
-                  <h4>{item.name}</h4>
-                </div>
-                <div className="badge badge--secondary">{item.air_date}</div>
-              </li>
-            );
-          })}
+          {episodes.length ? (
+            episodes.map((item, index) => {
+              return (
+                <li key={item.id}>
+                  <div>
+                    {String(index + 1).padStart(2, "0")} - {item.episode}:{""}
+                    <h4>{item.name}</h4>
+                  </div>
+                  <div className="badge badge--secondary">{item.air_date}</div>
+                </li>
+              );
+            })
+          ) : (
+            <div>There is no Episodes available</div>
+          )}
         </ul>
       </div>
     </div>
