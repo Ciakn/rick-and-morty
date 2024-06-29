@@ -2,30 +2,30 @@ import React from "react";
 import { HiOutlineUser } from "react-icons/hi2";
 import Loader from "./Loader";
 function Characterlist({ characters, isLoading }) {
-  console.log(characters);
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
   return (
     <div className=".characters-list">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        characters.map((character, index) => {
-          console.log(character);
-          return (
-            <div>
-              <Character key={character.id} character={character} />
-            </div>
-          );
-        })
-      )}
+      {characters.map((character, index) => {
+        return (
+          <div key={character.id}>
+            <Character character={character} />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 export default Characterlist;
 const Character = ({ character }) => {
-  console.log(character);
   return (
-    <div className="list__item">
+    <div key={character.id} className="list__item">
       <img src={character.image} alt={character.name} />
       <h3 className="name">
         <span> {character.gender === "Male" ? "👨" : "👩"}</span>
