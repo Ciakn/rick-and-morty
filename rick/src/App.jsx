@@ -10,6 +10,8 @@ import SearchResult from "./components/SearchResult";
 function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState("");
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,7 +33,7 @@ function App() {
     <div>
       <Toaster />
       <Navbar numOfCharacters={characters.length}>
-        <Search />
+        <Search query={query} setQeury={setQuery} />
         <SearchResult numOfCharacters={characters.length} />
       </Navbar>
 
