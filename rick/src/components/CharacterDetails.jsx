@@ -14,6 +14,8 @@ function CharacterDetails({
 
   useEffect(() => {
     async function fetchData() {
+      const controller = new AbortController();
+      const signal = controller.signal
       setLoading(true);
       try {
         const { data } = await axios.get(
@@ -36,6 +38,9 @@ function CharacterDetails({
 
     if (selectedCharacterId) {
       fetchData();
+    }
+    return () => {
+      controller.abort();
     }
   }, [selectedCharacterId]);
   if (!selectedCharacterId || !character) {
