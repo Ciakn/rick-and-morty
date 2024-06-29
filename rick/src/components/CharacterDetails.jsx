@@ -2,18 +2,26 @@ import React, { useEffect, useState } from "react";
 import { episodes } from "../../data/data";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import axios from "axios";
+import toast from "react-hot-toast";
 function CharacterDetails({ selectedCharacterId }) {
   const [character, setCharacters] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchData() {
       try {
-        const {data} = await axios.get(
+        setLoading(true);
+        const { data } = await axios.get(
           `https://rickandmortyapi.com/api/character/${selectedCharacterId}`
         );
-        console.log(data);
+
         setCharacters(data);
-      } catch (error) {}
+      } catch (error) {
+        toast.error(error.response.data.error);
+      } finally {
+        setLoading(false);
+      }
     }
+
     if (selectedCharacterId) {
       fetchData();
     }
