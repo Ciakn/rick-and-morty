@@ -3,13 +3,14 @@ import { episodes } from "../../data/data";
 import { FaCircleArrowDown } from "react-icons/fa6";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Loader from "./Loader";
 function CharacterDetails({ selectedCharacterId }) {
   const [character, setCharacters] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       try {
-        setLoading(true);
         const { data } = await axios.get(
           `https://rickandmortyapi.com/api/character/${selectedCharacterId}`
         );
@@ -28,6 +29,13 @@ function CharacterDetails({ selectedCharacterId }) {
   }, [selectedCharacterId]);
   if (!selectedCharacterId || !character) {
     return <div>Select a Character for detail</div>;
+  }
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
   return (
     <div className="" style={{ flex: 1 }}>
