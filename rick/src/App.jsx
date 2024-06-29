@@ -7,11 +7,13 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Search from "./components/Search";
 import SearchResult from "./components/SearchResult";
+import FavoriteCharacters from "./components/FavoriteCharacters";
 function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const [favorite, setFavorite] = useState([]);
   const onSelectCharacter = (id) => {
     setSelectedId((prev) => (prev == id ? null : id));
   };
@@ -24,8 +26,6 @@ function App() {
           `https://rickandmortyapi.com/api/character?name=${query}`
         );
         setCharacters(data.results.slice(0, 6));
-
-      
       } catch (error) {
         setCharacters([]);
         toast.error(error.response.data.error);
@@ -42,6 +42,11 @@ function App() {
       <Navbar numOfCharacters={characters.length}>
         <Search query={query} setQeury={setQuery} />
         <SearchResult numOfCharacters={characters.length} />
+        <FavoriteCharacters
+          favorite={favorite}
+          numOffavorite={favorite.length}
+          setFavorite={setFavorite}
+        />
       </Navbar>
 
       <main className="main">

@@ -80,7 +80,7 @@ function CharacterDetails({ selectedCharacterId }) {
             <p>{character.location.name}</p>
           </div>
           <div className="actions">
-            <button className="btn btn--primary">Add to favorite</button>
+            <button onClick={()=> ""} className="btn btn--primary">Add to favorite</button>
           </div>
         </div>
       </div>

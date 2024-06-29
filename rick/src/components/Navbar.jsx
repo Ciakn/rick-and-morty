@@ -5,11 +5,6 @@ function Navbar({ children }) {
     <nav className="navbar">
       <div className="navbar__logo">LOGO ##</div>
       {children}
-      <button className="heart">
-        {" "}
-        <HeartIcon className="icon" />
-        <span className="badge">4</span>{" "}
-      </button>
     </nav>
   );
 }
