@@ -22,11 +22,14 @@ function App() {
   };
   const isAddedFavorite = favorite.map((fav) => fav.id).includes(selectedId);
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     async function fetchData() {
       try {
         setIsLoading(true);
         const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character?name=${query}`
+          `https://rickandmortyapi.com/api/character?name=${query}`,
+          { signal: signal }
         );
         setCharacters(data.results.slice(0, 6));
       } catch (error) {
@@ -38,6 +41,9 @@ function App() {
     }
 
     fetchData();
+    return () => {
+      controller.abort();
+   }
   }, [query]);
   return (
     <div>
