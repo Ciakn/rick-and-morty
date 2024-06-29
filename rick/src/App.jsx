@@ -51,7 +51,7 @@ function App() {
             onSelectCharacter={onSelectCharacter}
           />
         }
-        <CharacterDetails />
+        <CharacterDetails selectedCharacterId={selectedId} />
       </main>
     </div>
   );

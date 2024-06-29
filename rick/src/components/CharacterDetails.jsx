@@ -1,7 +1,26 @@
-import React from "react";
-import { character, episodes } from "../../data/data";
+import React, { useEffect, useState } from "react";
+import { episodes } from "../../data/data";
 import { FaCircleArrowDown } from "react-icons/fa6";
-function CharacterDetails({ selectedCharacter }) {
+import axios from "axios";
+function CharacterDetails({ selectedCharacterId }) {
+  const [character, setCharacters] = useState(null);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const {data} = await axios.get(
+          `https://rickandmortyapi.com/api/character/${selectedCharacterId}`
+        );
+        console.log(data);
+        setCharacters(data);
+      } catch (error) {}
+    }
+    if (selectedCharacterId) {
+      fetchData();
+    }
+  }, [selectedCharacterId]);
+  if (!selectedCharacterId || !character) {
+    return <div>Select a Character for detail</div>;
+  }
   return (
     <div className="" style={{ flex: 1 }}>
       <div className="character-detail">
