@@ -11,21 +11,33 @@ function CharacterDetails({
   const [character, setCharacters] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [episodes, setEpisode] = useState([]);
-
+  const [sortBy, setSortBy] = useState(true);
+  let sortedEpisodes;
+  if (sortBy) {
+    sortedEpisodes = episodes.sort(
+      (a, b) => new Date(a.created) - new Date(b.created)
+    );
+  } else {
+    sortedEpisodes = [...episodes].sort(
+      (a, b) => new Date(b.created) - new Date(a.created)
+    );
+  }
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     async function fetchData() {
-      const controller = new AbortController();
-      const signal = controller.signal
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character/${selectedCharacterId}`
+          `https://rickandmortyapi.com/api/character/${selectedCharacterId}`,
+          { signal }
         );
         setCharacters(data);
 
         const episodeId = data.episode.map((e) => e.split("/").at(-1));
         const { data: episodeData } = await axios.get(
-          `https://rickandmortyapi.com/api/episode/${episodeId}`
+          `https://rickandmortyapi.com/api/episode/${episodeId}`,
+          { signal }
         );
 
         setEpisode([episodeData].flat().slice(0, 7));
@@ -41,7 +53,7 @@ function CharacterDetails({
     }
     return () => {
       controller.abort();
-    }
+    };
   }, [selectedCharacterId]);
   if (!selectedCharacterId || !character) {
     return (
@@ -104,14 +116,14 @@ function CharacterDetails({
       <div className="character-episodes">
         <div className="title">
           <h2>Lists of episodes</h2>
-          <button className="icon">
+          <button onClick={() => setSortBy((is) => !is)} className="icon">
             {" "}
             <FaCircleArrowDown />{" "}
           </button>
         </div>
         <ul>
-          {episodes.length ? (
-            episodes.map((item, index) => {
+          {sortedEpisodes.length ? (
+            sortedEpisodes.map((item, index) => {
               return (
                 <li key={item.id}>
                   <div>
