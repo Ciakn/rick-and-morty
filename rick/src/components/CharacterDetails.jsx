@@ -28,7 +28,18 @@ function CharacterDetails({ selectedCharacterId }) {
     }
   }, [selectedCharacterId]);
   if (!selectedCharacterId || !character) {
-    return <div>Select a Character for detail</div>;
+    return (
+      <div
+        style={{
+          color: "white",
+          fontWeight: "bold",
+          width: "100%",
+          justifyContent: "center",
+          display: "flex",
+        }}>
+        Select a Character for detail
+      </div>
+    );
   }
   if (isLoading) {
     return (
