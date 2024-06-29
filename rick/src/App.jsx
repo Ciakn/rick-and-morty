@@ -5,6 +5,8 @@ import CharacterDetails from "./components/CharacterDetails";
 import Characterlist from "./components/Characterlist";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import Search from "./components/Search";
+import SearchResult from "./components/SearchResult";
 function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +30,11 @@ function App() {
   return (
     <div>
       <Toaster />
-      <Navbar numOfCharacters={characters.length} />
+      <Navbar numOfCharacters={characters.length}>
+        <Search />
+        <SearchResult numOfCharacters={characters.length} />
+      </Navbar>
+
       <main className="main">
         {<Characterlist characters={characters} isLoading={isLoading} />}
         <CharacterDetails />
