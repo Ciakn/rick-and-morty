@@ -1,7 +1,7 @@
 import React from "react";
-import { HiOutlineUser } from "react-icons/hi2";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Loader from "./Loader";
-function Characterlist({ characters, isLoading }) {
+function Characterlist({ characters, isLoading, onSelectCharacter }) {
   if (isLoading) {
     return (
       <div>
@@ -14,7 +14,10 @@ function Characterlist({ characters, isLoading }) {
       {characters.map((character, index) => {
         return (
           <div key={character.id}>
-            <Character character={character} />
+            <Character
+              onSelectCharacter={onSelectCharacter}
+              character={character}
+            />
           </div>
         );
       })}
@@ -23,9 +26,12 @@ function Characterlist({ characters, isLoading }) {
 }
 
 export default Characterlist;
-const Character = ({ character }) => {
+const Character = ({ character, onSelectCharacter }) => {
   return (
-    <div key={character.id} className="list__item">
+    <div
+      key={character.id}
+      className="list__item"
+      onClick={() => onSelectCharacter(character.id)}>
       <img src={character.image} alt={character.name} />
       <h3 className="name">
         <span> {character.gender === "Male" ? "👨" : "👩"}</span>
@@ -38,7 +44,7 @@ const Character = ({ character }) => {
         <span> {character.status} </span>
         <span>-{character.species}</span>
       </div>
-      <button className="icon red">{"👁 "}</button>
+      <button className="icon red">{<EyeIcon />}</button>
     </div>
   );
 };

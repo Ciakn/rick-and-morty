@@ -11,7 +11,11 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
-
+  const [selectedId, setSelectedId] = useState(null);
+  const onSelectCharacter = (id) => {
+    setSelectedId(id);
+  };
+  console.log(selectedId);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -22,12 +26,13 @@ function App() {
 
         setCharacters(data.results.slice(0, 6));
       } catch (error) {
-        setCharacters([])
+        setCharacters([]);
         toast.error(error.response.data.error);
       } finally {
         setIsLoading(false);
       }
     }
+
     fetchData();
   }, [query]);
   return (
@@ -39,7 +44,13 @@ function App() {
       </Navbar>
 
       <main className="main">
-        {<Characterlist characters={characters} isLoading={isLoading} />}
+        {
+          <Characterlist
+            characters={characters}
+            isLoading={isLoading}
+            onSelectCharacter={onSelectCharacter}
+          />
+        }
         <CharacterDetails />
       </main>
     </div>

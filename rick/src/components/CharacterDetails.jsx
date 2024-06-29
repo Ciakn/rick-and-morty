@@ -1,7 +1,7 @@
 import React from "react";
 import { character, episodes } from "../../data/data";
 import { FaCircleArrowDown } from "react-icons/fa6";
-function CharacterDetails() {
+function CharacterDetails({ selectedCharacter }) {
   return (
     <div className="" style={{ flex: 1 }}>
       <div className="character-detail">

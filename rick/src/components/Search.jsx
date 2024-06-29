@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function Search({ query, setQeury }) {
-    console.log(query);
   return (
     <input
       type="text"
