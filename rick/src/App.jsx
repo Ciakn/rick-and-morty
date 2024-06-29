@@ -33,8 +33,10 @@ function App() {
         );
         setCharacters(data.results.slice(0, 6));
       } catch (error) {
-        setCharacters([]);
-        toast.error(error.response.data.error);
+        if (!axios.isCancel()) {
+          setCharacters([]);
+          toast.error(err.response.data.error);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -43,7 +45,7 @@ function App() {
     fetchData();
     return () => {
       controller.abort();
-   }
+    };
   }, [query]);
   return (
     <div>
