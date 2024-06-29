@@ -3,7 +3,11 @@ import { FaCircleArrowDown } from "react-icons/fa6";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
-function CharacterDetails({ selectedCharacterId }) {
+function CharacterDetails({
+  selectedCharacterId,
+  onAddFavorite,
+  isAddedFavorite,
+}) {
   const [character, setCharacters] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [episodes, setEpisode] = useState([]);
@@ -80,7 +84,15 @@ function CharacterDetails({ selectedCharacterId }) {
             <p>{character.location.name}</p>
           </div>
           <div className="actions">
-            <button onClick={()=> ""} className="btn btn--primary">Add to favorite</button>
+            {isAddedFavorite ? (
+              <p>{`Already Exists in Favorites ✔ `} </p>
+            ) : (
+              <button
+                onClick={() => onAddFavorite(character)}
+                className="btn btn--primary">
+                Add to favorite
+              </button>
+            )}
           </div>
         </div>
       </div>

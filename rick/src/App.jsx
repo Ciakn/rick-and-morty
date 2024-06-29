@@ -17,7 +17,10 @@ function App() {
   const onSelectCharacter = (id) => {
     setSelectedId((prev) => (prev == id ? null : id));
   };
-  console.log(selectedId);
+  const addFavoriteHandler = (char) => {
+    setFavorite((prevFav) => [...prevFav, char]);
+  };
+  const isAddedFavorite = favorite.map((fav) => fav.id).includes(selectedId);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -58,7 +61,11 @@ function App() {
             selectedCharacterId={selectedId}
           />
         }
-        <CharacterDetails selectedCharacterId={selectedId} />
+        <CharacterDetails
+          isAddedFavorite={isAddedFavorite}
+          selectedCharacterId={selectedId}
+          onAddFavorite={addFavoriteHandler}
+        />
       </main>
     </div>
   );
