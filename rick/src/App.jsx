@@ -8,6 +8,7 @@ import axios from "axios";
 import Search from "./components/Search";
 import SearchResult from "./components/SearchResult";
 import FavoriteCharacters from "./components/FavoriteCharacters";
+import Modal from "./components/Modal";
 function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,9 @@ function App() {
   };
   const addFavoriteHandler = (char) => {
     setFavorite((prevFav) => [...prevFav, char]);
+  };
+  const HandleRemoveFavorite = (id) => {
+    setFavorite((prevFav) => prevFav.filter((fav) => fav.id !== id));
   };
   const isAddedFavorite = favorite.map((fav) => fav.id).includes(selectedId);
   useEffect(() => {
@@ -50,13 +54,16 @@ function App() {
   return (
     <div>
       <Toaster />
+      {/* <Modal title={"title"} open={true} onOpen={"" } >
+        
+      </Modal> */}
       <Navbar numOfCharacters={characters.length}>
         <Search query={query} setQeury={setQuery} />
         <SearchResult numOfCharacters={characters.length} />
         <FavoriteCharacters
           favorite={favorite}
           numOffavorite={favorite.length}
-          setFavorite={setFavorite}
+          HandleRemoveFavorite={HandleRemoveFavorite}
         />
       </Navbar>
 
