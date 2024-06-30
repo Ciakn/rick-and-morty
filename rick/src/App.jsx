@@ -14,7 +14,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [favorite, setFavorite] = useState([]);
+  const [favorite, setFavorite] = useState(()=> JSON.parse(localStorage.getItem("FAVORITES")) || []);
+
   const onSelectCharacter = (id) => {
     setSelectedId((prev) => (prev == id ? null : id));
   };
@@ -25,6 +26,7 @@ function App() {
     setFavorite((prevFav) => prevFav.filter((fav) => fav.id !== id));
   };
   const isAddedFavorite = favorite.map((fav) => fav.id).includes(selectedId);
+
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -51,12 +53,13 @@ function App() {
       controller.abort();
     };
   }, [query]);
+  useEffect(() => {
+    localStorage.setItem("FAVORITES", JSON.stringify(favorite));
+  }, [favorite]);
+  console.log(localStorage.getItem("FAVORITES"));
   return (
     <div>
       <Toaster />
-      {/* <Modal title={"title"} open={true} onOpen={"" } >
-        
-      </Modal> */}
       <Navbar numOfCharacters={characters.length}>
         <Search query={query} setQeury={setQuery} />
         <SearchResult numOfCharacters={characters.length} />
