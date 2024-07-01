@@ -8,16 +8,16 @@ import Search from "./components/Search";
 import SearchResult from "./components/SearchResult";
 import FavoriteCharacters from "./components/FavoriteCharacters";
 import useCharacter from "./hooks/useCharacters";
+import useLocalStorage from "./hooks/useLocalStorage";
 function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [favorite, setFavorite] = useState(
-    () => JSON.parse(localStorage.getItem("FAVORITES")) || []
-  );
+ 
   const { characters, isLoading } = useCharacter(
     "https://rickandmortyapi.com/api/character?name",
     query
   );
+  const [favorite , setFavorite] = useLocalStorage("FAVORITES" , [])
   const onSelectCharacter = (id) => {
     setSelectedId((prev) => (prev == id ? null : id));
   };
@@ -29,10 +29,7 @@ function App() {
   };
   const isAddedFavorite = favorite.map((fav) => fav.id).includes(selectedId);
 
-  useEffect(() => {
-    localStorage.setItem("FAVORITES", JSON.stringify(favorite));
-  }, [favorite]);
-  console.log(localStorage.getItem("FAVORITES"));
+
   return (
     <div>
       <Toaster />
